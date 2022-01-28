@@ -52,7 +52,6 @@ jobs:
 
             let output = '';
             let returnCode = await exec.exec(`aws amplify get-app --app-id ${{ secrets.AMPLIFY_APP_ID }}`, [], {
-              silent: true,
               listeners: { stdout: (data) => { output += data.toString() } }
             } )
             if (returnCode !== 0) {
@@ -88,7 +87,7 @@ jobs:
               customRules.push({ source: rewriteSource, target: rewriteTarget, status: "302"});
             }
 
-            returnCode = await exec.exec('aws amplify update-app', ['--app-id', '${{ secrets.AMPLIFY_APP_ID }}', '--custom-rules', JSON.stringify(customRules)], { silent: true });
+            returnCode = await exec.exec('aws amplify update-app', ['--app-id', '${{ secrets.AMPLIFY_APP_ID }}', '--custom-rules', JSON.stringify(customRules)]);
             if (returnCode !== 0) {
               throw new Error(
                 `Error running aws amplify get-app: ${returnCode}`
